@@ -1,0 +1,69 @@
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+venv.bak/
+*.egg-info/
+build/
+dist/
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Lambda and build output
+*.zip
+*.tar.gz
+*.egg
+.eggs/
+
+# AWS SAM/Serverless
+.aws-sam/
+
+# Node.js / React
+node_modules/
+yarn-error.log
+yarn-debug.log*
+npm-debug.log*
+build/
+dist/
+coverage/
+.cache/
+
+# Log files
+*.log
+
+# Custom
+*.sublime-workspace
+*.sublime-project
+
+# Production static assets
+public/static/
+
+# Misc
+*.swp
+*~
+
+# Local test/coverage/
+coverage/
+
+# Exclude example env, do not ignore
+!env.example

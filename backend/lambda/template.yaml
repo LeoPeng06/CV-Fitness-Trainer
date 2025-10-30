@@ -1,0 +1,190 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AI Fitness Trainer Serverless API
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 3008
+    Runtime: python3.9
+    Environment:
+      Variables:
+        OPENAI_API_KEY: !Ref OpenAIAPIKey
+
+Parameters:
+  OpenAIAPIKey:
+    Type: String
+    Description: OpenAI API Key for LLM integration
+    NoEcho: true
+
+Resources:
+  FitnessTrainerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../
+      Handler: lambda.lambda_handler.lambda_handler
+      Description: AI Fitness Trainer API with CV and LLM integration
+      Events:
+        PostureAnalysis:
+          Type: Api
+          Properties:
+            Path: /analyze-posture
+            Method: post
+        WorkoutPlan:
+          Type: Api
+          Properties:
+            Path: /workout-plan
+            Method: post
+        NutritionAdvice:
+          Type: Api
+          Properties:
+            Path: /nutrition-advice
+            Method: post
+        ExerciseLibrary:
+          Type: Api
+          Properties:
+            Path: /exercise-library
+            Method: get
+        HealthCheck:
+          Type: Api
+          Properties:
+            Path: /health
+            Method: get
+        Options:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: options
+      # Layers:
+        # - !Ref MediaPipeLayer
+        # - !Ref PyTorchLayer
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: '*'
+
+  # MediaPipeLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     LayerName: mediapipe-layer
+  #     Description: MediaPipe and OpenCV dependencies
+  #     ContentUri: layers/mediapipe/
+  #     CompatibleRuntimes:
+  #       - python3.9
+  #     RetentionPolicy: Retain
+
+  # PyTorchLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     LayerName: pytorch-layer
+  #     Description: PyTorch dependencies
+  #     ContentUri: layers/pytorch/
+  #     CompatibleRuntimes:
+  #       - python3.9
+  #     RetentionPolicy: Retain
+
+  FitnessTrainerApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title: AI Fitness Trainer API
+          version: 1.0.0
+        paths:
+          /analyze-posture:
+            post:
+              summary: Analyze exercise posture
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        image:
+                          type: string
+                          description: Base64 encoded image
+                        exercise_type:
+                          type: string
+                          enum: [squat, pushup, plank, lunge, deadlift]
+              responses:
+                '200':
+                  description: Analysis result
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          form_score:
+                            type: number
+                          corrections:
+                            type: array
+                            items:
+                              type: string
+          /workout-plan:
+            post:
+              summary: Generate workout plan
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        user_profile:
+                          type: object
+                        goals:
+                          type: array
+                          items:
+                            type: string
+              responses:
+                '200':
+                  description: Workout plan
+          /nutrition-advice:
+            post:
+              summary: Get nutrition advice
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+              responses:
+                '200':
+                  description: Nutrition advice
+          /exercise-library:
+            get:
+              summary: Get exercise library
+              responses:
+                '200':
+                  description: Exercise library
+          /health:
+            get:
+              summary: Health check
+              responses:
+                '200':
+                  description: Health status
+
+Outputs:
+  FitnessTrainerApi:
+    Description: "API Gateway endpoint URL for AI Fitness Trainer API"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Export:
+      Name: FitnessTrainerApiUrl
+
+  FitnessTrainerFunction:
+    Description: "AI Fitness Trainer Lambda Function ARN"
+    Value: !GetAtt FitnessTrainerFunction.Arn
+    Export:
+      Name: FitnessTrainerFunctionArn
