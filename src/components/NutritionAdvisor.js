@@ -6,28 +6,37 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: clamp(16px, 2vw, 32px);
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Arial', sans-serif;
+  color: white;
 `;
 
 const Header = styled.h1`
   color: white;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-shadow: 0 10px 25px rgba(0,0,0,0.4);
+`;
+
+const Subtitle = styled.p`
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  max-width: 640px;
+  line-height: 1.6;
 `;
 
 const FormContainer = styled.div`
-  background: white;
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  max-width: 500px;
-  width: 100%;
-  margin-bottom: 30px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 30px 65px rgba(15,15,45,0.35);
+  width: min(90vw, 640px);
+  margin-bottom: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0,0,0,0.05);
 `;
 
 const FormGroup = styled.div`
@@ -38,68 +47,75 @@ const Label = styled.label`
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #333;
+  color: #111827;
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
-    border-color: #4ecdc4;
+    border-color: #f97362;
+    box-shadow: 0 0 0 3px rgba(249,115,98,0.2);
   }
 `;
 
 const Select = styled.select`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
-    border-color: #4ecdc4;
+    border-color: #f97362;
+    box-shadow: 0 0 0 3px rgba(249,115,98,0.2);
   }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
   resize: vertical;
   min-height: 80px;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
-    border-color: #4ecdc4;
+    border-color: #f97362;
+    box-shadow: 0 0 0 3px rgba(249,115,98,0.2);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
-  border-radius: 8px;
-  background: #4ecdc4;
+  border-radius: 60px;
+  background: linear-gradient(135deg, #ff6b6b, #f94d6a);
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 15px 30px rgba(249, 77, 106, 0.35);
 
   &:hover {
-    background: #45b7aa;
     transform: translateY(-2px);
+    box-shadow: 0 20px 35px rgba(249, 77, 106, 0.4);
   }
 
   &:disabled {
@@ -110,25 +126,26 @@ const Button = styled.button`
 `;
 
 const NutritionAdviceContainer = styled.div`
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  max-width: 600px;
-  width: 100%;
-  margin-bottom: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 30px 65px rgba(15,15,45,0.35);
+  width: min(95vw, 720px);
+  margin-bottom: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0,0,0,0.05);
 `;
 
 const MealCard = styled.div`
-  background: #f8f9fa;
-  border-radius: 10px;
+  background: rgba(255,107,107,0.08);
+  border-radius: 16px;
   padding: 20px;
   margin: 15px 0;
-  border-left: 4px solid #4ecdc4;
+  border: 1px solid rgba(255,107,107,0.2);
+  box-shadow: 0 12px 30px rgba(255,107,107,0.2);
 `;
 
 const MealTitle = styled.h3`
-  color: #333;
+  color: #0d1b2a;
   margin: 0 0 15px 0;
 `;
 
@@ -142,9 +159,10 @@ const NutritionGrid = styled.div`
 const NutritionItem = styled.div`
   background: white;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 `;
 
 const NutritionLabel = styled.div`
@@ -171,7 +189,7 @@ const FoodItem = styled.span`
   color: white;
   padding: 6px 12px;
   border-radius: 15px;
-  font-size: 14px;
+  font-size: 0.9rem;
 `;
 
 const BenefitsList = styled.div`
@@ -186,24 +204,25 @@ const BenefitItem = styled.span`
   color: white;
   padding: 6px 12px;
   border-radius: 15px;
-  font-size: 14px;
+  font-size: 0.9rem;
 `;
 
 const TimingInfo = styled.div`
-  background: #e3f2fd;
+  background: rgba(25, 118, 210, 0.12);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin: 10px 0;
-  color: #1976d2;
+  color: #0d3c61;
   font-style: italic;
+  border: 1px solid rgba(25,118,210,0.2);
 `;
 
 const LoadingSpinner = styled.div`
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #3498db;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top: 3px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 10px;
@@ -215,12 +234,12 @@ const LoadingSpinner = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(244, 67, 54, 0.12);
+  color: #b71c1c;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 20px 0;
-  border-left: 4px solid #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.25);
 `;
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -320,6 +339,7 @@ const NutritionAdvisor = () => {
   return (
     <Container>
       <Header>AI Nutrition Advisor</Header>
+      <Subtitle>Fuel every workout with meals tailored to your goals and lifestyle.</Subtitle>
       
       <FormContainer>
         <h2 style={{ textAlign: 'center', marginBottom: '25px', color: '#333' }}>

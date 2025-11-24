@@ -6,28 +6,37 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: clamp(16px, 2vw, 32px);
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Arial', sans-serif;
+  color: white;
 `;
 
 const Header = styled.h1`
   color: white;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-shadow: 0 10px 25px rgba(0,0,0,0.4);
+`;
+
+const Subtitle = styled.p`
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  max-width: 640px;
+  line-height: 1.6;
 `;
 
 const FormContainer = styled.div`
-  background: white;
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  max-width: 500px;
-  width: 100%;
-  margin-bottom: 30px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 30px 65px rgba(15,15,45,0.35);
+  width: min(90vw, 640px);
+  margin-bottom: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0,0,0,0.05);
 `;
 
 const FormGroup = styled.div`
@@ -38,68 +47,75 @@ const Label = styled.label`
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #333;
+  color: #111827;
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
     border-color: #4ecdc4;
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
   }
 `;
 
 const Select = styled.select`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
     border-color: #4ecdc4;
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
   }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
   padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
   resize: vertical;
   min-height: 80px;
+  background: rgba(17,24,39,0.03);
 
   &:focus {
     outline: none;
     border-color: #4ecdc4;
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.2);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
-  border-radius: 8px;
-  background: #4ecdc4;
+  border-radius: 60px;
+  background: linear-gradient(135deg, #4ecdc4, #13a8a1);
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 15px 30px rgba(78,205,196,0.35);
 
   &:hover {
-    background: #45b7aa;
     transform: translateY(-2px);
+    box-shadow: 0 20px 35px rgba(78,205,196,0.4);
   }
 
   &:disabled {
@@ -110,73 +126,76 @@ const Button = styled.button`
 `;
 
 const WorkoutPlanContainer = styled.div`
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  max-width: 600px;
-  width: 100%;
-  margin-bottom: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 30px 65px rgba(15,15,45,0.35);
+  width: min(95vw, 720px);
+  margin-bottom: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0,0,0,0.05);
 `;
 
 const ExerciseCard = styled.div`
-  background: #f8f9fa;
-  border-radius: 10px;
+  background: rgba(78,205,196,0.08);
+  border-radius: 16px;
   padding: 20px;
   margin: 15px 0;
-  border-left: 4px solid #4ecdc4;
+  border: 1px solid rgba(78,205,196,0.2);
+  box-shadow: 0 12px 30px rgba(78,205,196,0.2);
 `;
 
 const ExerciseTitle = styled.h3`
-  color: #333;
-  margin: 0 0 10px 0;
+  color: #0d1b2a;
+  margin: 0 0 12px 0;
 `;
 
 const ExerciseDetails = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
+  gap: 14px;
   margin: 10px 0;
 `;
 
 const DetailItem = styled.div`
   background: white;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(0,0,0,0.05);
 `;
 
 const Instructions = styled.p`
-  background: #e3f2fd;
-  padding: 12px;
-  border-radius: 6px;
-  margin: 10px 0;
+  background: rgba(25, 118, 210, 0.12);
+  padding: 14px;
+  border-radius: 12px;
+  margin: 12px 0;
   font-style: italic;
-  color: #1976d2;
+  color: #0d3c61;
+  border: 1px solid rgba(25,118,210,0.15);
 `;
 
 const MusclesList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 8px;
   margin-top: 10px;
 `;
 
 const MuscleTag = styled.span`
   background: #ff6b6b;
   color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-size: 0.85rem;
 `;
 
 const LoadingSpinner = styled.div`
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #3498db;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top: 3px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 10px;
@@ -188,12 +207,12 @@ const LoadingSpinner = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(244, 67, 54, 0.12);
+  color: #b71c1c;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 20px 0;
-  border-left: 4px solid #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.25);
 `;
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -282,6 +301,7 @@ const WorkoutPlanner = () => {
   return (
     <Container>
       <Header>AI Workout Planner</Header>
+      <Subtitle>Share your goals, time, and gear—we’ll craft the perfect session.</Subtitle>
       
       <FormContainer>
         <h2 style={{ textAlign: 'center', marginBottom: '25px', color: '#333' }}>

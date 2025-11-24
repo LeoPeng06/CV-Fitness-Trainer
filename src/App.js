@@ -130,8 +130,25 @@ const NavButton = styled.button`
   }
 `;
 
+const MainStage = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: clamp(40px, 5vw, 80px);
+`;
+
+const FrostedPanel = styled.div`
+  width: min(1300px, 95vw);
+  background: rgba(15, 16, 33, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 40px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(26px);
+`;
+
 const ContentContainer = styled.div`
-  width: min(1200px, 100%);
+  width: 100%;
   margin: 0 auto;
   padding: 0 clamp(16px, 3vw, 32px);
 `;
@@ -540,9 +557,13 @@ const App = () => {
         </Navigation>
       )}
       
-      <ContentContainer>
-        {renderContent()}
-      </ContentContainer>
+      <MainStage>
+        <FrostedPanel>
+          <ContentContainer>
+            {renderContent()}
+          </ContentContainer>
+        </FrostedPanel>
+      </MainStage>
     </>
   );
 };

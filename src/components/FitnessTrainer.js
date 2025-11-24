@@ -11,27 +11,38 @@ const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Arial', sans-serif;
+  color: white;
 `;
 
 const Header = styled.h1`
   color: white;
   text-align: center;
-  margin-bottom: clamp(20px, 4vw, 40px);
+  margin-bottom: clamp(12px, 3vw, 28px);
   font-size: clamp(2rem, 4vw, 3rem);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+`;
+
+const Subtitle = styled.p`
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  max-width: 640px;
+  line-height: 1.6;
 `;
 
 const CameraContainer = styled.div`
   position: relative;
-  border-radius: 15px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px rgba(15, 15, 45, 0.4);
   margin-bottom: clamp(20px, 3vw, 40px);
-  width: min(90vw, 720px);
+  width: min(90vw, 780px);
   aspect-ratio: 4 / 3;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 `;
 
 const WebcamStyled = styled(Webcam)`
@@ -58,24 +69,25 @@ const Controls = styled.div`
   margin-bottom: clamp(20px, 3vw, 40px);
   flex-wrap: wrap;
   justify-content: center;
-  width: min(95vw, 720px);
+  width: min(95vw, 780px);
 `;
 
 const Button = styled.button`
   padding: 12px clamp(16px, 3vw, 28px);
   border: none;
-  border-radius: 25px;
-  background: ${props => props.primary ? '#ff6b6b' : '#4ecdc4'};
+  border-radius: 30px;
+  background: ${props => props.primary ? 'linear-gradient(135deg, #ff6b6b, #f94d6a)' : 'rgba(255, 255, 255, 0.15)'};
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  border: 2px solid ${props => props.primary ? 'transparent' : 'rgba(255,255,255,0.2)'};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
   }
 
   &:disabled {
@@ -88,19 +100,110 @@ const Button = styled.button`
 const Select = styled.select`
   padding: 12px clamp(16px, 2vw, 24px);
   border: none;
-  border-radius: 25px;
-  background: white;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.9);
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  min-width: 180px;
+`;
+
+const InfoGrid = styled.div`
+  width: min(95vw, 780px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: clamp(24px, 3vw, 36px);
+`;
+
+const InfoCard = styled.div`
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const InfoLabel = styled.span`
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+`;
+
+const InfoValue = styled.span`
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+`;
+
+const TipBanner = styled.div`
+  width: min(95vw, 780px);
+  background: rgba(78, 205, 196, 0.15);
+  border: 1px solid rgba(78, 205, 196, 0.4);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: clamp(20px, 3vw, 32px);
+  color: #e0fffb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+`;
+
+const OverlayBadge = styled.div`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(255, 105, 97, 0.9);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 10px 20px rgba(255, 105, 97, 0.35);
+`;
+
+const MetricsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: clamp(16px, 2vw, 24px);
+`;
+
+const MetricCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+`;
+
+const MetricLabel = styled.div`
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+`;
+
+const MetricValue = styled.div`
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
 `;
 
 const AnalysisContainer = styled.div`
-  background: white;
-  border-radius: 15px;
+  background: rgba(13, 27, 42, 0.85);
+  border-radius: 24px;
   padding: clamp(20px, 3vw, 32px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  width: min(95vw, 680px);
+  box-shadow: 0 30px 65px rgba(5, 8, 20, 0.45);
+  width: min(95vw, 720px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
 `;
 
 const ScoreDisplay = styled.div`
@@ -131,42 +234,44 @@ const StatusText = styled.div`
   font-size: 18px;
   font-weight: bold;
   color: ${props => {
-    if (props.score >= 0.8) return '#4CAF50';
-    if (props.score >= 0.6) return '#FF9800';
-    return '#F44336';
+    if (props.score >= 0.8) return '#7df9b9';
+    if (props.score >= 0.6) return '#ffd166';
+    return '#ff6b6b';
   }};
 `;
 
 const CorrectionsList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: clamp(16px, 2vw, 24px) 0;
 `;
 
 const CorrectionItem = styled.li`
-  background: #f8f9fa;
-  padding: 12px 15px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border-left: 4px solid #ff6b6b;
-  font-size: 14px;
+  background: rgba(78, 205, 196, 0.15);
+  padding: 14px 18px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border-left: 5px solid #4ecdc4;
+  font-size: 0.95rem;
+  color: #e5fdf8;
 `;
 
 const FeedbackText = styled.div`
-  background: #e3f2fd;
-  padding: 15px;
-  border-radius: 8px;
+  background: rgba(25, 118, 210, 0.18);
+  padding: 18px;
+  border-radius: 12px;
   margin-top: 20px;
   font-style: italic;
-  color: #1976d2;
+  color: #d6ecff;
+  border: 1px solid rgba(25, 118, 210, 0.35);
 `;
 
 const LoadingSpinner = styled.div`
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #3498db;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 10px;
@@ -178,12 +283,12 @@ const LoadingSpinner = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(244, 67, 54, 0.1);
+  color: #b71c1c;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 20px 0;
-  border-left: 4px solid #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.25);
 `;
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -288,8 +393,34 @@ const FitnessTrainer = () => {
   return (
     <Container>
       <Header>AI Fitness Trainer</Header>
+      <Subtitle>Step in front of your camera and let your virtual coach guide every rep.</Subtitle>
+
+      <TipBanner>
+        💡 For best results, ensure your full body is visible and your space is well lit.
+      </TipBanner>
+
+      <InfoGrid>
+        <InfoCard>
+          <InfoLabel>Exercise Selected</InfoLabel>
+          <InfoValue>{selectedExercise.charAt(0).toUpperCase() + selectedExercise.slice(1)}</InfoValue>
+        </InfoCard>
+        <InfoCard>
+          <InfoLabel>Analysis Status</InfoLabel>
+          <InfoValue>{isAnalyzing ? 'Processing...' : 'Ready'}</InfoValue>
+        </InfoCard>
+        <InfoCard>
+          <InfoLabel>Continuous Mode</InfoLabel>
+          <InfoValue>{isCapturing ? 'Active' : 'Off'}</InfoValue>
+        </InfoCard>
+      </InfoGrid>
       
       <CameraContainer>
+        {isCapturing && (
+          <OverlayBadge>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff' }} />
+            LIVE
+          </OverlayBadge>
+        )}
         <WebcamStyled
           ref={webcamRef}
           audio={false}
@@ -339,18 +470,33 @@ const FitnessTrainer = () => {
         </ErrorMessage>
       )}
 
-      {analysisResult && (
+    {analysisResult && (
         <AnalysisContainer>
           {poseOverlay && (
             <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-              <h3>Detected Pose</h3>
+              <h3 style={{ marginBottom: '12px', color: '#0d1b2a' }}>Detected Pose</h3>
               <img 
                 src={poseOverlay} 
                 alt="Pose overlay" 
-                style={{ maxWidth: '100%', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}
+                style={{ maxWidth: '100%', borderRadius: '16px', boxShadow: '0 15px 35px rgba(13,27,42,0.25)' }}
               />
             </div>
           )}
+
+          <MetricsGrid>
+            <MetricCard>
+              <MetricLabel>Confidence</MetricLabel>
+              <MetricValue>{Math.round(analysisResult.confidence * 100)}%</MetricValue>
+            </MetricCard>
+            <MetricCard>
+              <MetricLabel>Form Score</MetricLabel>
+              <MetricValue>{Math.round(analysisResult.form_score * 100)}%</MetricValue>
+            </MetricCard>
+            <MetricCard>
+              <MetricLabel>Corrections</MetricLabel>
+              <MetricValue>{analysisResult.corrections?.length || 0}</MetricValue>
+            </MetricCard>
+          </MetricsGrid>
           <ScoreDisplay>
             <ScoreCircle score={analysisResult.form_score}>
               {Math.round(analysisResult.form_score * 100)}%
